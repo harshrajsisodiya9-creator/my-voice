@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talk to Harshraj</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Talk to Harshraj's Voice Bot</h1>
+      <p class="subtitle">Tap the mic, ask a question, and hear my answer.</p>
+    </header>
+
+    <div id="status" class="status ready">Ready</div>
+
+    <div class="mic-area">
+      <button id="mic-btn" class="mic-btn" aria-label="Tap to record">
+        <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8" y1="23" x2="16" y2="23"/>
+        </svg>
+      </button>
+      <button id="stop-speech-btn" class="stop-speech-btn hidden" aria-label="Stop speaking">
+        Stop Speaking
+      </button>
+    </div>
+
+    <div class="chips">
+      <button class="chip" data-q="What should we know about your life story in a few sentences?">Life story</button>
+      <button class="chip" data-q="What's your #1 superpower?">Superpower</button>
+      <button class="chip" data-q="What are the top 3 areas you'd like to grow in?">Growth areas</button>
+      <button class="chip" data-q="What misconception do your coworkers have about you?">Misconception</button>
+      <button class="chip" data-q="How do you push your boundaries and limits?">Pushing limits</button>
+    </div>
+
+    <div id="chat" class="chat"></div>
+
+    <form id="text-form" class="text-form">
+      <input type="text" id="text-input" placeholder="Type a question instead..." autocomplete="off">
+      <button type="submit" aria-label="Send">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </form>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

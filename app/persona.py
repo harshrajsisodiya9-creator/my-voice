@@ -65,6 +65,7 @@ def _build_chain():
         max_output_tokens=GEMINI_MAX_OUTPUT_TOKENS,
         reasoning_effort=GEMINI_THINKING_LEVEL,
         max_retries=0,
+        timeout=15,
     )
 
     groq_common = {
@@ -74,7 +75,15 @@ def _build_chain():
         "reasoning_effort": "low",
         "reasoning_format": "hidden",
     }
-    fallbacks = [ChatGroq(model_name=m, **groq_common) for m in GROQ_FALLBACK_MODELS]
+    fallbacks = []
+    for i, m in enumerate(GROQ_FALLBACK_MODELS):
+        is_last = i == len(GROQ_FALLBACK_MODELS) - 1
+        fallbacks.append(ChatGroq(
+            model_name=m,
+            max_retries=2 if is_last else 0,
+            request_timeout=15,
+            **groq_common,
+        ))
 
     llm = gemini.with_fallbacks(fallbacks)
     return _prompt | llm | StrOutputParser()
@@ -99,8 +108,8 @@ def answer(question: str, history: list[dict]) -> str:
         elif msg["role"] == "assistant":
             msgs.append(AIMessage(content=msg["content"]))
 
-    chain = _get_chain()
     try:
+        chain = _get_chain()
         return chain.invoke(
             {
                 "persona": _load_persona(),

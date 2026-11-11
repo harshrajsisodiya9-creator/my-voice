@@ -117,9 +117,10 @@
 
     try {
       const res = await fetch("/api/talk", { method: "POST", body: form });
-      const data = await res.json();
+      let data;
+      try { data = await res.json(); } catch { data = {}; }
       if (!res.ok) {
-        setStatus("error", data.error || "Something went wrong");
+        setStatus("error", data.error || "Something went wrong. Please try again.");
         return;
       }
       if (data.transcript) {
@@ -130,7 +131,7 @@
       pushHistory("assistant", data.reply);
       speakText(data.reply);
     } catch (e) {
-      setStatus("error", "Network error. Please check your connection.");
+      setStatus("error", "Could not reach the server. Please check your connection.");
     }
   }
 
@@ -145,16 +146,17 @@
 
     try {
       const res = await fetch("/api/talk", { method: "POST", body: form });
-      const data = await res.json();
+      let data;
+      try { data = await res.json(); } catch { data = {}; }
       if (!res.ok) {
-        setStatus("error", data.error || "Something went wrong");
+        setStatus("error", data.error || "Something went wrong. Please try again.");
         return;
       }
       addMessage("bot", data.reply);
       pushHistory("assistant", data.reply);
       speakText(data.reply);
     } catch (e) {
-      setStatus("error", "Network error. Please check your connection.");
+      setStatus("error", "Could not reach the server. Please check your connection.");
     }
   }
 

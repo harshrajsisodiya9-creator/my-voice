@@ -12,6 +12,14 @@ from app.speech import AudioValidationError, transcribe
 app = FastAPI()
 
 
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    return JSONResponse(
+        status_code=500,
+        content={"error": "Something went wrong on my end. Please try again in a moment."},
+    )
+
+
 @app.get("/api/health")
 async def health():
     return {"status": "ok"}
